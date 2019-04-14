@@ -93,4 +93,8 @@ public interface AppearanceInterface {
     void setShowDaysOfWeek(boolean showDaysOfWeek);
 
     void setShowDaysOfWeekTitle(boolean showDaysOfWeekTitle);
+
+    void setSelectedCircleSize(int selectedCircleSize);
+
+    int getSelectedCircleSize();
 }

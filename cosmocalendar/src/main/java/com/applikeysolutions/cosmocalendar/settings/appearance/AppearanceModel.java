@@ -62,6 +62,8 @@ public class AppearanceModel implements AppearanceInterface {
     //Icon resource of next month navigation button
     private int nextMonthIconRes;
 
+    private int selectedCircleSize = 100;
+
     /**
      * Orientation of calendar
      * possible values:
@@ -305,5 +307,15 @@ public class AppearanceModel implements AppearanceInterface {
     @Override
     public void setShowDaysOfWeekTitle(boolean showDaysOfWeekTitle) {
         this.showDaysOfWeekTitle = showDaysOfWeekTitle;
+    }
+
+    @Override
+    public int getSelectedCircleSize() {
+        return selectedCircleSize;
+    }
+
+    @Override
+    public void setSelectedCircleSize(int selectedCircleSize) {
+        this.selectedCircleSize = selectedCircleSize;
     }
 }

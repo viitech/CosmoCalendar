@@ -3,16 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
-    <com.applikeysolutions.cosmocalendar.view.customviews.CircleAnimationTextView
-        android:id="@+id/tv_day_number"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:padding="@dimen/day_text_padding"
-        android:textColor="@color/default_day_text_color"
-        android:textSize="@dimen/day_text_size"
-        tools:text="10" />
+        android:layout_height="wrap_content">
+        <com.applikeysolutions.cosmocalendar.view.customviews.CircleAnimationTextView
+            android:id="@+id/tv_day_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:padding="@dimen/day_text_padding"
+            style="@style/day_text_style"
+            tools:text="10" />
+
+        <ImageView
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:visibility="invisible"
+            android:id="@+id/ivDecorate"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/tv_day_number"
+            android:background="@drawable/background_circle_blue"/>
+    </RelativeLayout>
+
+
 
 </FrameLayout>

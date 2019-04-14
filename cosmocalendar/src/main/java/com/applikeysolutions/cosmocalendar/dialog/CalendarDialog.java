@@ -14,18 +14,19 @@ import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.applikeysolutions.cosmocalendar.settings.lists.DisabledDaysCriteria;
-import com.applikeysolutions.cosmocalendar.settings.lists.connected_days.ConnectedDays;
-import com.applikeysolutions.cosmocalendar.settings.lists.connected_days.ConnectedDaysManager;
-import com.applikeysolutions.cosmocalendar.utils.SelectionType;
-import com.applikeysolutions.customizablecalendar.R;
 import com.applikeysolutions.cosmocalendar.model.Day;
 import com.applikeysolutions.cosmocalendar.settings.appearance.AppearanceInterface;
 import com.applikeysolutions.cosmocalendar.settings.date.DateInterface;
 import com.applikeysolutions.cosmocalendar.settings.lists.CalendarListsInterface;
+import com.applikeysolutions.cosmocalendar.settings.lists.DisabledDaysCriteria;
+import com.applikeysolutions.cosmocalendar.settings.lists.connected_days.ConnectedDays;
+import com.applikeysolutions.cosmocalendar.settings.lists.connected_days.ConnectedDaysManager;
 import com.applikeysolutions.cosmocalendar.settings.selection.SelectionInterface;
+import com.applikeysolutions.cosmocalendar.utils.SelectionType;
 import com.applikeysolutions.cosmocalendar.view.CalendarView;
+import com.applikeysolutions.customizablecalendar.R;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
 
@@ -344,6 +345,16 @@ public class CalendarDialog extends Dialog implements View.OnClickListener,
     }
 
     @Override
+    public Calendar getMinDate() {
+        return calendarView.getMinDate();
+    }
+
+    @Override
+    public Calendar getMaxDate() {
+        return calendarView.getMaxDate();
+    }
+
+    @Override
     public Set<Long> getDisabledDays() {
         return calendarView.getDisabledDays();
     }
@@ -361,6 +372,16 @@ public class CalendarDialog extends Dialog implements View.OnClickListener,
     @Override
     public DisabledDaysCriteria getDisabledDaysCriteria() {
         return calendarView.getDisabledDaysCriteria();
+    }
+
+    @Override
+    public void setMinDate(Calendar minDate) {
+        calendarView.setMinDate(minDate);
+    }
+
+    @Override
+    public void setMaxDate(Calendar maxDate) {
+        calendarView.setMaxDate(maxDate);
     }
 
     @Override
@@ -391,5 +412,15 @@ public class CalendarDialog extends Dialog implements View.OnClickListener,
     @Override
     public void setFirstDayOfWeek(int firstDayOfWeek) {
         calendarView.setFirstDayOfWeek(firstDayOfWeek);
+    }
+
+    @Override
+    public int getSelectedCircleSize() {
+        return calendarView.getSelectedCircleSize();
+    }
+
+    @Override
+    public void setSelectedCircleSize(int circleSize) {
+        calendarView.setSelectedCircleSize(circleSize);
     }
 }

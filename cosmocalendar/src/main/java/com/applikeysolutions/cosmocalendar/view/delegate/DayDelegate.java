@@ -5,13 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.applikeysolutions.customizablecalendar.R;
 import com.applikeysolutions.cosmocalendar.adapter.MonthAdapter;
 import com.applikeysolutions.cosmocalendar.adapter.viewholder.DayHolder;
 import com.applikeysolutions.cosmocalendar.model.Day;
-import com.applikeysolutions.cosmocalendar.selection.BaseSelectionManager;
-import com.applikeysolutions.cosmocalendar.selection.MultipleSelectionManager;
+import com.applikeysolutions.cosmocalendar.selection.BaseSingleSelectionManager;
 import com.applikeysolutions.cosmocalendar.view.CalendarView;
+import com.applikeysolutions.customizablecalendar.R;
 
 public class DayDelegate extends BaseDelegate {
 
@@ -29,18 +28,14 @@ public class DayDelegate extends BaseDelegate {
 
     public void onBindDayHolder(final RecyclerView.Adapter daysAdapter, final Day day,
                                 final DayHolder holder, final int position) {
-        final BaseSelectionManager selectionManager = monthAdapter.getSelectionManager();
-        holder.bind(day, selectionManager);
+        final BaseSingleSelectionManager selectionManager = monthAdapter.getBaseSingleSelectionManager();
+        holder.bind(day, selectionManager, selectionManager);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!day.isDisabled()) {
                     selectionManager.toggleDay(day);
-                    if (selectionManager instanceof MultipleSelectionManager) {
-                        daysAdapter.notifyItemChanged(position);
-                    } else {
-                        monthAdapter.notifyDataSetChanged();
-                    }
+                    monthAdapter.notifyDataSetChanged();
                 }
             }
         });

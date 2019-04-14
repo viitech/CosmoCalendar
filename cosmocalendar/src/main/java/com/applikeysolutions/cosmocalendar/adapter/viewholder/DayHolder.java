@@ -2,30 +2,39 @@ package com.applikeysolutions.cosmocalendar.adapter.viewholder;
 
 import android.content.res.Resources;
 import android.view.View;
+import android.widget.ImageView;
 
-import com.applikeysolutions.cosmocalendar.settings.appearance.ConnectedDayIconPosition;
-import com.applikeysolutions.cosmocalendar.utils.CalendarUtils;
-import com.applikeysolutions.customizablecalendar.R;
 import com.applikeysolutions.cosmocalendar.model.Day;
 import com.applikeysolutions.cosmocalendar.selection.BaseSelectionManager;
-import com.applikeysolutions.cosmocalendar.selection.RangeSelectionManager;
+import com.applikeysolutions.cosmocalendar.selection.BaseSingleSelectionManager;
 import com.applikeysolutions.cosmocalendar.selection.SelectionState;
+import com.applikeysolutions.cosmocalendar.settings.appearance.ConnectedDayIconPosition;
+import com.applikeysolutions.cosmocalendar.utils.CalendarUtils;
 import com.applikeysolutions.cosmocalendar.view.CalendarView;
 import com.applikeysolutions.cosmocalendar.view.customviews.CircleAnimationTextView;
+import com.applikeysolutions.customizablecalendar.R;
 
 public class DayHolder extends BaseDayHolder {
 
     private CircleAnimationTextView ctvDay;
+    private ImageView ivDecorate;
     private BaseSelectionManager selectionManager;
+    private BaseSingleSelectionManager baseSingleSelectionManager;
 
     public DayHolder(View itemView, CalendarView calendarView) {
         super(itemView, calendarView);
         ctvDay = (CircleAnimationTextView) itemView.findViewById(R.id.tv_day_number);
+        ivDecorate = (ImageView) itemView.findViewById(R.id.ivDecorate);
     }
 
-    public void bind(Day day, BaseSelectionManager selectionManager) {
-        this.selectionManager = selectionManager;
+    public void bind(Day day, BaseSingleSelectionManager selectionManager, BaseSingleSelectionManager baseSingleSelectionManager) {
+        this.baseSingleSelectionManager = baseSingleSelectionManager;
         ctvDay.setText(String.valueOf(day.getDayNumber()));
+        if (day.isFromConnectedCalendar()) {
+            ivDecorate.setVisibility(View.VISIBLE);
+        } else {
+            ivDecorate.setVisibility(View.INVISIBLE);
+        }
 
         boolean isSelected = selectionManager.isDaySelected(day);
         if (isSelected && !day.isDisabled()) {
@@ -34,9 +43,9 @@ public class DayHolder extends BaseDayHolder {
             unselect(day);
         }
 
-        if (day.isCurrent()) {
-            addCurrentDayIcon(isSelected);
-        }
+//        if (day.isCurrent()) {
+//            addCurrentDayIcon(isSelected);
+//        }
 
         if(day.isDisabled()){
             ctvDay.setTextColor(calendarView.getDisabledDayTextColor());
@@ -80,11 +89,12 @@ public class DayHolder extends BaseDayHolder {
         }
 
         SelectionState state;
-        if (selectionManager instanceof RangeSelectionManager) {
-            state = ((RangeSelectionManager) selectionManager).getSelectedState(day);
-        } else {
-            state = SelectionState.SINGLE_DAY;
-        }
+//        if (selectionManager instanceof RangeSelectionManager) {
+//            state = ((RangeSelectionManager) selectionManager).getSelectedState(day);
+//        } else {
+//            state = SelectionState.SINGLE_DAY;
+//        }
+        state = SelectionState.SINGLE_DAY;
         animateDay(state, day);
     }
 

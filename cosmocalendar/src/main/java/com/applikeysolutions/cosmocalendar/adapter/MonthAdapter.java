@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import com.applikeysolutions.cosmocalendar.adapter.viewholder.MonthHolder;
 import com.applikeysolutions.cosmocalendar.model.Day;
 import com.applikeysolutions.cosmocalendar.model.Month;
-import com.applikeysolutions.cosmocalendar.selection.BaseSelectionManager;
+import com.applikeysolutions.cosmocalendar.selection.BaseSingleSelectionManager;
 import com.applikeysolutions.cosmocalendar.settings.lists.DisabledDaysCriteria;
 import com.applikeysolutions.cosmocalendar.utils.CalendarUtils;
 import com.applikeysolutions.cosmocalendar.utils.DayFlag;
@@ -28,13 +28,14 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthHolder> {
     private MonthDelegate monthDelegate;
 
     private CalendarView calendarView;
-    private BaseSelectionManager selectionManager;
+    private BaseSingleSelectionManager selectionManager;
+    //    private BaseSingleSelectionManager baseSingleSelectionManager;
     private DaysAdapter daysAdapter;
 
     private MonthAdapter(List<Month> months,
                          MonthDelegate monthDelegate,
                          CalendarView calendarView,
-                         BaseSelectionManager selectionManager) {
+                         BaseSingleSelectionManager selectionManager) {
         setHasStableIds(true);
         this.months = months;
         this.monthDelegate = monthDelegate;
@@ -42,11 +43,19 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthHolder> {
         this.selectionManager = selectionManager;
     }
 
-    public void setSelectionManager(BaseSelectionManager selectionManager) {
+    public void setSelectionManager(BaseSingleSelectionManager selectionManager) {
         this.selectionManager = selectionManager;
     }
 
-    public BaseSelectionManager getSelectionManager() {
+    public BaseSingleSelectionManager getSelectionManager() {
+        return selectionManager;
+    }
+
+    public void setBaseSingleSelectionManager(BaseSingleSelectionManager baseSingleSelectionManager) {
+        this.selectionManager = baseSingleSelectionManager;
+    }
+
+    public BaseSingleSelectionManager getBaseSingleSelectionManager() {
         return selectionManager;
     }
 
@@ -91,7 +100,7 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthHolder> {
         private List<Month> months;
         private MonthDelegate monthDelegate;
         private CalendarView calendarView;
-        private BaseSelectionManager selectionManager;
+        private BaseSingleSelectionManager selectionManager;
 
         public MonthAdapterBuilder setMonths(List<Month> months) {
             this.months = months;
@@ -108,7 +117,7 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthHolder> {
             return this;
         }
 
-        public MonthAdapterBuilder setSelectionManager(BaseSelectionManager selectionManager) {
+        public MonthAdapterBuilder setSelectionManager(BaseSingleSelectionManager selectionManager) {
             this.selectionManager = selectionManager;
             return this;
         }
@@ -123,6 +132,28 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthHolder> {
 
     public void setWeekendDays(Set<Long> weekendDays) {
         setDaysAccordingToSet(weekendDays, DayFlag.WEEKEND);
+    }
+
+    public void setMinDate(Calendar minDate){
+        for (Month month : months) {
+            for (Day day : month.getDays()) {
+                if(!day.isDisabled()){
+                    day.setDisabled(CalendarUtils.isDayDisabledByMinDate(day, minDate));
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+    public void setMaxDate(Calendar maxDate){
+        for (Month month : months) {
+            for (Day day : month.getDays()) {
+                if(!day.isDisabled()){
+                    day.setDisabled(CalendarUtils.isDayDisabledByMaxDate(day, maxDate));
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 
     public void setDisabledDays(Set<Long> disabledDays) {

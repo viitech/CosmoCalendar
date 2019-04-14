@@ -128,7 +128,7 @@ public class CircleAnimationTextView extends AppCompatTextView {
             createCirclePaint();
         }
 
-        final int diameter = getWidth() - DEFAULT_PADDING * 2;
+        final int diameter = calendarView == null ? 100 : calendarView.getSelectedCircleSize(); //TODO -34 I ADDED '^ _ ^'
         final int diameterProgress = animationProgress * diameter / MAX_PROGRESS;
 
         setBackgroundColor(Color.TRANSPARENT);
@@ -241,7 +241,7 @@ public class CircleAnimationTextView extends AppCompatTextView {
     private void animateView() {
         CircularFillAnimation animation = new CircularFillAnimation();
 //        animation.setInterpolator(new BounceInterpolator()); //just for fun
-        animation.setDuration(SELECTION_ANIMATION_DURATION);
+        animation.setDuration(0);
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {

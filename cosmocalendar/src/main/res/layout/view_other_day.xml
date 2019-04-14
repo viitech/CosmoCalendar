@@ -8,6 +8,7 @@
         android:id="@+id/tv_day_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_gravity="center"
         android:gravity="center"
         android:padding="@dimen/day_text_padding"
